@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DNA Translator | DNA to mRNA to Protein</title>
+<meta name="description" content="Validate a DNA sequence, transcribe it to mRNA and translate it into a protein. Runs fully in your browser.">
+<meta property="og:title" content="DNA Translator">
+<meta property="og:description" content="Validate DNA, transcribe to mRNA, translate to protein. Built by a biotechnology student.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>DNA Translator</h1>
+    <p>Validate a DNA sequence, transcribe it to mRNA, and translate it into a protein.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card" aria-labelledby="in-h">
+    <h2 id="in-h">1. Enter DNA</h2>
+    <label for="seq">Sequence (plain text or FASTA)</label>
+    <textarea id="seq" spellcheck="false" autocapitalize="characters" placeholder="ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG"></textarea>
+    <p id="status" class="status" role="status"></p>
+    <div class="controls">
+      <div><label for="strand">Strand you entered</label>
+        <select id="strand"><option value="coding">Coding (sense) strand</option><option value="template">Template (antisense) strand</option></select></div>
+      <div><label for="frame">Reading frame</label>
+        <select id="frame"><option value="0">+1</option><option value="1">+2</option><option value="2">+3</option>
+          <option value="3">−1 (reverse)</option><option value="4">−2 (reverse)</option><option value="5">−3 (reverse)</option></select></div>
+    </div>
+    <div class="controls">
+      <label class="chk"><input type="checkbox" id="atg" checked> Start at first AUG</label>
+      <label class="chk"><input type="checkbox" id="stp" checked> Stop at first stop codon</label>
+    </div>
+    <div class="controls">
+      <button class="primary" id="sample" type="button">Try an example</button>
+      <button id="clear" type="button">Clear</button>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="v-h">
+    <h2 id="v-h">2. Validated DNA</h2>
+    <div class="out mono" id="dnaOut"></div>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="card" aria-labelledby="m-h">
+    <div class="head"><h2 id="m-h">3. mRNA (transcription)</h2><button type="button" data-copy="mrna">Copy mRNA</button></div>
+    <div class="out mono" id="mrnaOut"></div>
+  </section>
+
+  <section class="card" aria-labelledby="p-h">
+    <div class="head"><h2 id="p-h">4. Protein (translation)</h2><button type="button" data-copy="protein">Copy protein</button></div>
+    <div class="out mono" id="protein" aria-live="polite"></div>
+    <div class="chips" id="chips"></div>
+    <div class="legend">
+      <span><i class="non"></i>Nonpolar</span><span><i class="pol"></i>Polar</span><span><i class="pos"></i>Positive</span>
+      <span><i class="neg"></i>Negative</span><span><i class="stop"></i>Stop</span><span><i class="start"></i>Start (AUG)</span>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="f-h">
+    <h2 id="f-h">All six reading frames</h2>
+    <p class="note">Select a frame to make it the active one.</p>
+    <div class="frames" id="frames"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-h">
+    <h2 id="h-h">How it works</h2>
+    <ol class="how">
+      <li><b>Validation.</b> Only A, C, G and T are accepted. FASTA header lines, spaces and digits are removed. Any other character is highlighted with its position.</li>
+      <li><b>Transcription.</b> The coding strand is copied with T replaced by U. A template strand is reverse-complemented first.</li>
+      <li><b>Translation.</b> The mRNA is read three bases at a time using the standard genetic code, from the first AUG until a stop codon.</li>
+    </ol>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap">Built by Dhanraj Singh Songara, BSc Biotechnology student, Indore. Runs entirely in your browser; no data is sent anywhere.</div></footer>
+<script src="script.js"></script>
+</body>
+</html>
